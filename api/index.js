@@ -1,7 +1,10 @@
 // Use "type: module" in package.json to use ES modules
-import express from 'express';
-import sharp from "sharp"
-import { createCanvas } from 'canvas';
+const express = require('express')
+const sharp = require("sharp")
+const { createCanvas, registerFont } = require('canvas');
+require('dotenv').config()
+
+
 
 const app = express();
  
@@ -14,6 +17,9 @@ app.get('/home', (req, res) => {
   res.send("welcome home.");
 });
 
+//the path is appendix to the root dir vercelNew
+registerFont('fonts/Cairo-Regular.ttf', { family: 'Cairo, Regular' });
+
 
 app.get("/test", (req, res) => {
 
@@ -25,12 +31,12 @@ app.get("/test", (req, res) => {
     const canvas = createCanvas(736, 1104)
     const ctx = canvas.getContext('2d')
 
-    //ctx.font = 'bold 80px "Cairo, Regular"'
+    ctx.font = 'bold 80px "Cairo, Regular" '
     ctx.fillStyle = '#f9d697'; 
     ctx.textAlign = 'center';
-    ctx.fillText('lorem ipsum', canvas.width / 2, 280)
+    ctx.fillText("العالم الجديد", canvas.width / 2, 280)
     //ctx.font = '40px "Cairo, Regular" '
-    ctx.fillText("lorem ipsum", canvas.width / 2, 580)
+    ctx.fillText("العالم الجديد", canvas.width / 2, 580)
     
         
     
@@ -47,8 +53,8 @@ app.get("/test", (req, res) => {
 // Export the Express app
 export default app;
 
-/* 
-app.listen( 3000 , () => {
+
+/* app.listen( 3000 , () => {
   console.log ("server is ready")
 })
  */
