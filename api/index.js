@@ -18,7 +18,7 @@ app.get('/home', (req, res) => {
 });
 
 //the path is appendix to the root dir vercelNew
-registerFont('fonts/Cairo-Regular.ttf', { family: 'Cairo, Regular' });
+//registerFont('fonts/Cairo-Regular.ttf', { family: 'Cairo, Regular' });
 
 
 app.get("/test", (req, res) => {
@@ -51,12 +51,12 @@ app.get("/test", (req, res) => {
 })
  
 // Export the Express app
-export default app;
+//export default app;
 
 
-/* app.listen( 3000 , () => {
+app.listen( 3000 , () => {
   console.log ("server is ready")
 })
- */
+
 
 
