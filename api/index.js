@@ -6,8 +6,8 @@ require('dotenv').config()
 
 
 //the path is appendix to the root dir vercelNew
-registerFont('fonts/Cairo-Regular.ttf', { family: 'Cairo, Regular' });
-registerFont('fonts/ReemKufi-Regular.ttf', { family: 'Reem Kufi, Regular' });
+registerFont('included/fonts/Cairo-Regular.ttf', { family: 'Cairo, Regular' });
+registerFont('included/fonts/ReemKufi-Regular.ttf', { family: 'Reem Kufi, Regular' });
 
 
 const app = express();
@@ -96,7 +96,7 @@ app.get('/aid', (req, res) => {
 
             
     
-    sharp('template/aid-template.jpg')
+    sharp('included/template/aid-template.jpg')
     .composite([ 
         {input: canvas.toBuffer('image/png'), top: 0, left: 0}, 
     ], 
