@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href='https://fonts.googleapis.com/css?family=Cairo' rel='stylesheet'>
+    <link rel="stylesheet" href="goodDay.css">
+
+</head>
+
+<body>
+    <h1>حمل بطاقة تهنئة فوريا!</h1>
+    <img id = "sample" src="aladha-sample.jpg" alt="">
+
+
+
+    <form id= 'myForm'  >
+        <p for = "recipient" > أدخل اسم المستقبل:</p>
+        <input type="text" id = "recipient" name = 'recipient' placeholder="يوسف (اسم المستقبل)"  required>
+
+
+
+        <p> اختر العبارة:</p>
+
+        <section id = "radio">
+            <div id="select" onclick="radioButtons()"  style = "margin-bottom: 30px;">
+                    اللهم لا سهل إلا ما جعلته سهلاً، وأنت تجعل الصعب إن شئت سهلاً                     
+                <i  class="arrow up"></i>   
+            </div>
+
+
+            <div id= "options" >
+                <div class="option"  style = "display: none;"  onclick="radioButtons(this)">
+                    اللهم لا سهل إلا ما جعلته سهلاً، وأنت تجعل الصعب إن شئت سهلاً                     
+                </div>
+                <div class="option" style = "display: none;"  onclick="radioButtons(this)">
+                
+                    نحبكم بخير الدعاء، فأدعو الله العزيز القدير أن يديم عليكم الصحة و العافية ويبعد عنكم البلاء ويحفظكم من كل سوء ومن  كل حاسد
+
+                </div>
+                <div class="option" style = "display: none;"  onclick="radioButtons(this)">   
+                    يوم آخر، معركة أخرى، دمت منتصرا وغانما                 
+                </div>
+                <div class="option" style = "display: none;"  onclick="radioButtons(this)">
+                    تذكر دائما أن الأفضل قادم ،أجلي لك تمنياتي بأيام مليئة بأسباب الابتسام                  
+                </div>
+                <div class="option" style = "display: none;"  onclick="radioButtons(this)">
+                    طوفان الأفكار السوداوية حاضر اليوم، لكن لا تدعه يمتد إليك 
+                </div>
+                <div class="option" style = "display: none;"  onclick="radioButtons(this)">
+                    اعتني بنفسك، فالأنانيون يعيشون عمرا مديدا
+                </div>
+                <div class="option" style = "display: none;"  onclick="radioButtons(this)">
+                     اتمنى ان تحظى بقدر وفير من القهوة هذا اليوم، لأن أوجاع الرأس لا تنتهي
+                </div>
+
+                <div class="option" style = "display: none;"  onclick="radioButtons(this)">
+                    أرجو أن تقود حياتك أهداف جادة، وتبتعد عن الأحلام، الأحلام لا تتحقق ، الأحلام الوحيدة التي تحققت هي تبليل الفراش
+                </div>
+                <div class="option" style = "display: none;"  onclick="radioButtons(this)">
+                    أنت الذي أخشى أن تؤذيه الحياة فيتأذى قلبي، تمنياتي لك بالنجاح والازدهار
+                </div>
+                <div class="option" style = "display: none;"  onclick="radioButtons(this)">
+                    أرسل إليك عناقا افتراضيا و حماما من الحب لتبدأ يومك 
+                </div>
+                <div class="option" style = "display: none;"  onclick="radioButtons(this)">
+                    أحبك لأنك أنت أنت، لا شبيه، لا مثيل، لابديل لك
+                </div>
+                <div class="option" style = "display: none;"  onclick="radioButtons(this)">
+                    اشتقت إليك ولكنها ليست المرة الأولى، بل هي عادتي في كل يوم ولكن بصمت
+                </div>
+                
+
+
+
+
+            </div>
+        </section>
+
+        <p> أدخل التوقيع:</p>
+
+        <input type="text" id = "signature" name = 'signature' placeholder="سلامي، أحمد"  required>
+
+
+        <button id = "submit">تحميل</button>
+    </form>
+
+
+
+
+    <div id = 'cta' style = " margin-top: 99px; height: 67px;">
+        <p >
+            taariq.connect@gmail.com <span>&copy; </span>           
+
+        </p>
+
+    </div>
+
+
+
+    <script>
+
+
+
+        function radioButtons(elem) {
+
+
+            let options = document.getElementsByClassName("option");
+            let arrow = document.querySelector(".arrow")
+            
+            for (let option of options) {
+                if (option.style.display == "none" ) {
+                    option.style.display = "block"
+                    arrow.className = "arrow down"
+                }
+                else {
+                    option.style.display = "none"
+                    arrow.className = "arrow up"
+
+                }
+                
+            }
+
+
+            if (elem) {
+                elem.classList.add("selected") //adding a class for later reference 
+                document.getElementById("select").firstChild.nodeValue = elem.innerHTML
+            }
+
+        }
+
+        const myForm = document.getElementById("myForm")
+
+        myForm.addEventListener('submit', function(event) {
+        // Code to execute on form submission
+            event.preventDefault(); 
+            
+            const formEntries = {
+                recipient: document.getElementById("recipient").value, 
+                signature: document.getElementById("signature").value, 
+                sentence: document.getElementById("select").firstChild.nodeValue
+            }
+
+            const url = `goodDay?recipient=${formEntries.recipient}&signature=${formEntries.signature}&sentence=${formEntries.sentence}`
+            window.location.href = url;
+
+
+        })
+
+
+
+
+    </script>
+ 
+
+</body>
+</html>

@@ -1,7 +1,7 @@
 // Use "type: module" in package.json to use ES modules
 const express = require('express')
 const sharp = require("sharp")
-const { createCanvas, registerFont } = require('canvas');
+const { createCanvas, registerFont, loadImage} = require('canvas');
 require('dotenv').config()
 
 
@@ -37,21 +37,46 @@ app.get("/test", (req, res) => {
 
 
 
-    const canvas = createCanvas(736, 1104)
+    const canvas = createCanvas(626, 527)
     const ctx = canvas.getContext('2d')
 
-    ctx.font = 'bold 80px "Cairo, Regular" '
-    ctx.fillStyle = '#f9d697'; 
-    ctx.textAlign = 'center';
-    ctx.fillText("العالم الجديد", canvas.width / 2, 280)
-    //ctx.font = '40px "Cairo, Regular" '
-    ctx.fillText("العالم الجديد", canvas.width / 2, 580)
+
+
+
     
-        
-    
-    sharp(canvas.toBuffer('image/png'))
-    .png()
-    .pipe(res)
+    loadImage('included/template/aid-template.jpg').then((image) => {
+      ctx.drawImage(image, 0,0)
+      fontSize = 80
+      ctx.font = `bold ${fontSize}px "Cairo, Regular" `
+      ctx.fillStyle = '#f9d697'; 
+      ctx.textAlign = 'center';
+
+      let text = "this is the test line to see the effect"
+      text = text.split(" ")
+      let space = 200; 
+      let line = ''
+      let textY = 100;
+
+      for (let n in text ) {
+
+        line = line + text[n] + " "
+        if (ctx.measureText(line).width >= space || n == text.length - 1 ) {
+            ctx.fillText(line, canvas.width / 2, textY)
+            line = ''
+            textY += fontSize * 1.0625;
+        }
+
+      }
+
+
+
+      res.send(canvas.toBuffer());
+
+
+
+
+
+    }) 
 
 
 
@@ -61,49 +86,95 @@ app.get("/test", (req, res) => {
 
 
 
-app.get('/aid', (req, res) => {
+
+
+app.get('/goodDay', (req, res) => {
+
+
 
     let recipient = req.query.recipient
-    let sender = `.سلامي...، ${req.query.sender}`
+    let signature = req.query.signature
+    let sentence = req.query.sentence
 
-    if ( recipient.length == 0 || sender.length == 0) {
-        console.log(recipient, sender)
+    
+
+    // data validation
+    if ( recipient.length == 0 || signature.length == 0) {
+        console.log(recipient, signature)
         console.log('validation error')
         return res.end()
     } 
 
 
 
-
-
-    res.setHeader('Content-Disposition', 'attachment; filename="image.png"');  //the name of image file
-    res.setHeader('Content-Type', 'image/png'); // Set response type
-
-
-    const canvas = createCanvas(626, 527)
+    const canvas = createCanvas(736, 944) // demnsions of the template; 
     const ctx = canvas.getContext('2d')
 
-    ctx.font = '40px "Reem Kufi, Regular"'
-    ctx.fillStyle = '#f9d697'; 
-    ctx.textAlign = 'center';
-    ctx.fillText(recipient, 450 , 220)
+
+    loadImage('included/template/empty_note.jpg').then((image) => {
+      ctx.drawImage(image, 0,0)
+      ctx.textAlign = 'center';
 
 
-    ctx.font = '22px "Reem Kufi, Regular"'
-    ctx.fillStyle = '#ffffff'; 
-    ctx.textAlign = 'right';
-    ctx.fillText(sender, 585 , 380)
+      //date
+      let date = new Date(); 
+      day = date.getDate(); 
+      stringDate = `في ${day} أكتوبر، 2025`
+      let fontSize = 30; 
+      ctx.font = `${fontSize}px "Cairo, Regular" `
+      ctx.fillStyle = '#000000ff'; 
+      ctx.fillText(stringDate, 550, 41)
+
+
+      //recipient
+      fontSize = 68; 
+      ctx.font = `bold ${fontSize}px "Cairo, Regular" `
+      ctx.fillStyle = '#b7410e'; 
+      ctx.fillText(recipient, canvas.width / 2, 243)
+
+
+      //signature
+      fontSize = 36 
+      ctx.font = `bold ${fontSize}px "Cairo, Regular" `
+      ctx.fillStyle = '#b7410e'; 
+      ctx.fillText(signature, canvas.width / 2, 611)
+
+
+
+
+      //sentence
+      fontSize = 36; 
+      ctx.font = `bold ${fontSize}px "Cairo, Regular" `
+      ctx.fillStyle = '#000000ff'; 
+      let text = sentence.trim();
+      text = text.split(" ")
+      let space = 550; 
+      let line = ''
+      let textY = 360; 
+
+      for (let n in text ) {
+
+        line = line + text[n] + " "
+        if (ctx.measureText(line).width >= space || n == text.length - 1 ) {
+            ctx.fillText(line, canvas.width / 2, textY)
+            line = ''
+            textY += fontSize * 1.39; 
+        }
+
+      }
+
+
+
+      res.setHeader('Content-Disposition', 'attachment; filename="image.png"');  //the name of image file
+      res.setHeader('Content-Type', 'image/png'); // Set response type
+
+      res.send(canvas.toBuffer());
+
+
+
+    })
 
             
-    
-    sharp('included/template/aid-template.jpg')
-    .composite([ 
-        {input: canvas.toBuffer('image/png'), top: 0, left: 0}, 
-    ], 
-    )
-    .png()
-    .pipe(res)
-  
   
   })
 
