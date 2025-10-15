@@ -6,8 +6,9 @@ require('dotenv').config()
 
 
 //the path is appendix to the root dir vercelNew
-registerFont('included/fonts/Cairo-Regular.ttf', { family: 'Cairo, Regular' });
 registerFont('included/fonts/ReemKufi-Regular.ttf', { family: 'Reem Kufi, Regular' });
+registerFont('included/fonts/Cairo-Bold.ttf', { family: 'Cairo, Bold' });
+registerFont('included/fonts/Cairo-Regular.ttf', { family: 'Cairo, Regular' });
 
 
 const app = express();
@@ -128,14 +129,14 @@ app.get('/goodDay', (req, res) => {
 
       //recipient
       fontSize = 68; 
-      ctx.font = `bold ${fontSize}px "Cairo, Regular" `
+      ctx.font = `bold ${fontSize}px "Cairo, Bold" `
       ctx.fillStyle = '#b7410e'; 
       ctx.fillText(recipient, canvas.width / 2, 243)
 
 
       //signature
       fontSize = 36 
-      ctx.font = `bold ${fontSize}px "Cairo, Regular" `
+      ctx.font = `bold ${fontSize}px "Cairo, Bold" `
       ctx.fillStyle = '#b7410e'; 
       ctx.fillText(signature, canvas.width / 2, 611)
 
@@ -144,7 +145,7 @@ app.get('/goodDay', (req, res) => {
 
       //sentence
       fontSize = 36; 
-      ctx.font = `bold ${fontSize}px "Cairo, Regular" `
+      ctx.font = `${fontSize}px "Cairo, regular" `
       ctx.fillStyle = '#000000ff'; 
       let text = sentence.trim();
       text = text.split(" ")
