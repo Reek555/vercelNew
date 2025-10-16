@@ -112,46 +112,48 @@ app.get('/goodDay', (req, res) => {
     const ctx = canvas.getContext('2d')
 
 
-    loadImage('included/template/empty_note.jpg').then((image) => {
+    loadImage('included/template/template-card.jpg').then((image) => {
       ctx.drawImage(image, 0,0)
       ctx.textAlign = 'center';
 
 
       //date
       let date = new Date(); 
-      day = date.getDate(); 
-      stringDate = `في ${day} أكتوبر، 2025`
-      let fontSize = 30; 
+      let day = date.getDate(); 
+      let month = date.getMonth() + 1; 
+      let year= date.getFullYear(); 
+      stringDate = `${day}/${month}/${year}`
+      let fontSize = 28; 
       ctx.font = `${fontSize}px "Cairo, Regular" `
       ctx.fillStyle = '#000000ff'; 
-      ctx.fillText(stringDate, 550, 41)
+      ctx.fillText(stringDate, 115, 40)
 
 
       //recipient
-      fontSize = 68; 
+      fontSize = 62; 
       ctx.font = `bold ${fontSize}px "Cairo, Bold" `
       ctx.fillStyle = '#b7410e'; 
-      ctx.fillText(recipient, canvas.width / 2, 243)
+      ctx.fillText(recipient, canvas.width / 2, 213)
 
 
       //signature
       fontSize = 36 
       ctx.font = `bold ${fontSize}px "Cairo, Bold" `
       ctx.fillStyle = '#b7410e'; 
-      ctx.fillText(signature, canvas.width / 2, 611)
+      ctx.fillText(signature, canvas.width / 2, 584)
 
 
 
 
       //sentence
       fontSize = 36; 
-      ctx.font = `${fontSize}px "Cairo, regular" `
+      ctx.font = `bold ${fontSize}px "Cairo, Bold" `
       ctx.fillStyle = '#000000ff'; 
       let text = sentence.trim();
       text = text.split(" ")
-      let space = 550; 
+      let space = 500; 
       let line = ''
-      let textY = 360; 
+      let textY = 329; 
 
       for (let n in text ) {
 
