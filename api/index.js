@@ -3,6 +3,7 @@ const express = require('express')
 const sharp = require("sharp")
 const { createCanvas, registerFont, loadImage} = require('canvas');
 require('dotenv').config()
+const fs = require("fs")
 
 
 //the path is appendix to the root dir vercelNew
@@ -33,55 +34,27 @@ app.get('/home', (req, res) => {
 
 app.get("/test", (req, res) => {
 
-    res.setHeader('Content-Disposition', 'attachment; filename="image.png"');  //the name of image file
-    res.setHeader('Content-Type', 'image/png'); // Set response type
+
+      const filePath = "./included/data.json";
+
+      const rawData = fs.readFileSync(filePath, "utf8");
+
+      // 2. Parse it into a JavaScript object
+      const data = JSON.parse(rawData);
+
+      // 3. Modify the data (for example, add a new post)
+      data.push({ id: 3, title: "New Post Added" });
+
+      // 4. Convert the updated object back to JSON text
+      const updatedJson = JSON.stringify(data, null, 2);
+
+      // 5. Write it back to the file
+      fs.writeFileSync(filePath, updatedJson, "utf8");
+
+      res.send("success")
 
 
-
-    const canvas = createCanvas(626, 527)
-    const ctx = canvas.getContext('2d')
-
-
-
-
-    
-    loadImage('included/template/aid-template.jpg').then((image) => {
-      ctx.drawImage(image, 0,0)
-      fontSize = 80
-      ctx.font = `bold ${fontSize}px "Cairo, Regular" `
-      ctx.fillStyle = '#f9d697'; 
-      ctx.textAlign = 'center';
-
-      let text = "this is the test line to see the effect"
-      text = text.split(" ")
-      let space = 200; 
-      let line = ''
-      let textY = 100;
-
-      for (let n in text ) {
-
-        line = line + text[n] + " "
-        if (ctx.measureText(line).width >= space || n == text.length - 1 ) {
-            ctx.fillText(line, canvas.width / 2, textY)
-            line = ''
-            textY += fontSize * 1.0625;
-        }
-
-      }
-
-
-
-      res.send(canvas.toBuffer());
-
-
-
-
-
-    }) 
-
-
-
-
+ 
 
 })
 
