@@ -1,9 +1,10 @@
 // Use "type: module" in package.json to use ES modules
 const express = require('express')
-const sharp = require("sharp")
 const { createCanvas, registerFont, loadImage} = require('canvas');
 require('dotenv').config()
-const fs = require("fs")
+const Stats = require("./stats")
+const path = require("path")
+
 
 
 //the path is appendix to the root dir vercelNew
@@ -13,6 +14,29 @@ registerFont('included/fonts/Cairo-Regular.ttf', { family: 'Cairo, Regular' });
 
 
 const app = express();
+
+
+
+
+app.get("/test", (req, res) => {
+
+})
+
+
+
+app.get('/goodDay.html', async (req, res) => {
+
+    res.sendFile(path.join(process.cwd(), "public/goodDay.html"))
+
+    let stats =  await Stats.find({}); 
+    let newViews = stats[0].views + 1; 
+    await Stats.updateOne({views: newViews})
+
+
+
+})
+
+
 
 //serving public files;
 app.use(express.static('public'))
@@ -32,31 +56,6 @@ app.get('/home', (req, res) => {
 
 
 
-app.get("/test", (req, res) => {
-
-
-      const filePath = "./included/data.json";
-
-      const rawData = fs.readFileSync(filePath, "utf8");
-
-      // 2. Parse it into a JavaScript object
-      const data = JSON.parse(rawData);
-
-      // 3. Modify the data (for example, add a new post)
-      data.push({ id: 3, title: "New Post Added" });
-
-      // 4. Convert the updated object back to JSON text
-      const updatedJson = JSON.stringify(data, null, 2);
-
-      // 5. Write it back to the file
-      fs.writeFileSync(filePath, updatedJson, "utf8");
-
-      res.send("success")
-
-
- 
-
-})
 
 
 
