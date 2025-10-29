@@ -26,12 +26,12 @@ app.get("/test", (req, res) => {
 
 app.get('/goodDay.html', async (req, res) => {
 
-    res.sendFile(path.join(process.cwd(), "public/goodDay.html"))
 
     let stats =  await Stats.find({}); 
     let newViews = stats[0].views + 1; 
     await Stats.updateOne({views: newViews})
 
+    res.sendFile(path.join(process.cwd(), "public/goodDay.html"))
 
 
 })
