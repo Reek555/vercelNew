@@ -31,7 +31,7 @@ app.get('/goodDay.html', async (req, res) => {
     let newViews = stats[0].views + 1; 
     await Stats.updateOne({views: newViews})
 
-    res.sendFile(path.join(process.cwd(), "public/goodDay.html"))
+    res.sendFile(path.join(process.cwd(), "public/card-sample.jpg"))
 
 
 })
