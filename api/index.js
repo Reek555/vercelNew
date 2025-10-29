@@ -2,7 +2,7 @@
 const express = require('express')
 const { createCanvas, registerFont, loadImage} = require('canvas');
 require('dotenv').config()
-const Stats = require("./stats")
+//const Stats = require("./stats")
 const path = require("path")
 
 
@@ -29,9 +29,9 @@ app.get('/goodDay.html', async (req, res) => {
 
     res.sendFile(path.join(process.cwd(), "included/goodDay.html"))
 
-    let stats =  await Stats.find({}); 
-    let newViews = stats[0].views + 1; 
-    await Stats.updateOne({views: newViews})
+    //let stats =  await Stats.find({}); 
+    //let newViews = stats[0].views + 1; 
+    //await Stats.updateOne({views: newViews})
 
 })
 
